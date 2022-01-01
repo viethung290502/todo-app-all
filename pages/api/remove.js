@@ -1,10 +1,10 @@
-const fs = require('fs')
-function remove (req,res) {
-    const id = JSON.parse(req.body)
-    const data = fs.readFileSync('././data/todos.json','utf-8')
-    const oldData = JSON.parse(data)
-    const result = oldData.filter(item => item.id !==id)
-    fs.writeFileSync('././data/todos.json',JSON.stringify(result))
-    res.json(result)
+import client from "../../lib/connectDB"
+
+async function remove(req, res) {
+  const id = req.body.id
+  const text = `DELETE FROM todos WHERE id = '${id}'`
+  await client.query(text)
+  const result = await client.query('SELECT * FROM todos')
+  res.json(result.rows)
 }
 export default remove

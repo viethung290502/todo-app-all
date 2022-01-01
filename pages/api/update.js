@@ -1,10 +1,10 @@
-const fs = require('fs')
-function update(req, res) {
+import client from "../../lib/connectDB"
+
+async function update(req, res) {
     const value = req.body
-    const data = fs.readFileSync('././data/todos.json', 'utf-8')
-    const oldData = JSON.parse(data)
-    const newData = oldData.map(item => item.id === value.id ? value : item)
-    fs.writeFileSync('././data/todos.json', JSON.stringify(newData))
-    res.json(newData)
+    const text = `UPDATE todos SET text = '${value.text}' WHERE id = '${value.id}'`
+    await client.query(text)
+    const result = await client.query('SELECT * FROM todos')
+    res.json(result.rows)
 }
 export default update

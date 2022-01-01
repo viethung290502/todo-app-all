@@ -6,10 +6,7 @@ const Todoform = ({addTodo}) => {
         setTodo(e.target.value)
     }
     const handleClick = () => {
-        addTodo({
-            id: Math.floor(Math.random() * 100000),
-            text: todo
-        })
+        addTodo(todo)
         setTodo('')
     }
     return (

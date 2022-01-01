@@ -1,12 +1,12 @@
-const fs = require('fs')
+import client from "../../lib/connectDB"
 
- async function them(req, res) {
-    const A = req.body
-    const B = fs.readFileSync('././data/todos.json', 'utf-8')
-    const olddata = JSON.parse(B)
-    const newdata = [A, ...olddata]
-    fs.writeFileSync('././data/todos.json', JSON.stringify(newdata))
-    res.json(newdata)
+async function handler(req, res) {
+    const todo = req.body
+    const text = 'INSERT INTO todos(text) VALUES($1) RETURNING *'
+    const values = [todo]
+    await client
+        .query(text, values)
+        .then(value => res.json(value.rows[0]))
 }
-export default them;
+export default handler
 

@@ -4,53 +4,52 @@ import Todoform from './Todoform'
 
 const Todolist = () => {
     let [todos, setTodos] = useState([])
-
-    useEffect(() => {
-        fetch('/api/render')
-            .then(response => response.json())
-            .then(value => setTodos(value))
+    useEffect(async () => {
+        const res = await fetch('/api/render')
+        const data = await res.json()
+        setTodos(data)
     }, [])
 
-    const addTodo = todo => {
-        fetch('/api/add', {
+    const addTodo = async (todo) => {
+        const res = await fetch('/api/add', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(todo)
         })
-            .then(response => response.json())
-            .then(value => setTodos(value))
+        const data = await res.json();
+        setTodos([...todos, data])
     }
 
-    const removeTodo = todo => {
-        fetch('/api/remove', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(todo.id)
-        })
-            .then(response => response.json())
-            .then(value => setTodos(value))
-    }
-
-    const updateTodo = todo => {
-        fetch('/api/update', {
+    const removeTodo = async (todo) => {
+        const res = await fetch('/api/remove', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(todo)
         })
-            .then(response => response.json())
-            .then(value => setTodos(value))
+        const data = await res.json()
+        setTodos(data)
+    }
+
+    const updateTodo = async (todo) => {
+        const res = await fetch('/api/update', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(todo)
+        })
+        const data = await res.json()
+        setTodos(data)
     }
 
     return (
         <div>
-            <Todoform addTodo={addTodo}/>
-            {todos.map(todo => <Todo todo={todo} removeTodo={removeTodo} updateTodo={updateTodo}/>)}
+            <Todoform addTodo={addTodo} />
+            {todos.map(todo => <Todo todo={todo} removeTodo={removeTodo} updateTodo={updateTodo} />)}
         </div>
     )
 }
