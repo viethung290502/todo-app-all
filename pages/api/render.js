@@ -1,8 +1,9 @@
-const fs = require('fs');
+import client from "../../lib/connectDB"
 
-function render(req, res) {
-  const data = fs.readFileSync('././data/todos.json', 'utf-8')
-  const oldData  = JSON.parse(data)
-  res.json(oldData)
+async function handler(req, res) {
+  await client
+    .query('SELECT * FROM todos')
+    .then(value => res.json(value.rows))
+    .catch(e => console.error(e.stack))
 }
-export default render
+export default handler
