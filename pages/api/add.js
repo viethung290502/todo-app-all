@@ -8,5 +8,6 @@ async function handler(req, res) {
         .query(text, values)
         .then(value => res.json(value.rows[0]))
 }
+
 export default handler
 

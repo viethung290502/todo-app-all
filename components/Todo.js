@@ -23,20 +23,21 @@ const Todo = ({todo, removeTodo, updateTodo}) => {
 
     if(edit.id) {
         return (
-            <div>
-                <input type="text" value={edit.text} onChange={handleChange} />
-                <button onClick={handleClick}>Update</button>
+            <div class="input-group mb-3" style={{'max-width': '500px'}}>
+                <input type="text" class="form-control" value={edit.text} onChange={handleChange} />
+                <button class="btn btn-primary  " type="button" onClick={handleClick}>Update</button>
             </div>
         )
     }
 
     return (
-        <div key={todo.id}>
+        <li key={todo.id} className='list-group-item'>
             {todo.text}
-            <br/>
-            <button onClick={() => removeTodo({id: todo.id, text: todo.text})}>Remove</button>
-            <button onClick={() => setEdit({id: todo.id, text: todo.text})}>Update</button>
-        </div>
+            <button type="button" class="btn btn-danger" onClick={() => removeTodo({id: todo.id, text: todo.text})} style={{'float': 'right'}}>Remove</button>
+            <button type="button" class="btn btn-primary" onClick={() => setEdit({id: todo.id, text: todo.text})} style={{'float': 'right'}}>Update</button>
+        </li>
+
+
     )
 }
 
