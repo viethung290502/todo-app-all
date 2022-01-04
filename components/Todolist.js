@@ -49,7 +49,9 @@ const Todolist = () => {
     return (
         <div>
             <Todoform addTodo={addTodo} />
-            {todos.map(todo => <Todo todo={todo} removeTodo={removeTodo} updateTodo={updateTodo} />)}
+            <ul className='list-group' style={{'max-width': '500px'}}>
+                {todos.map(todo => <Todo todo={todo} removeTodo={removeTodo} updateTodo={updateTodo} />)}
+            </ul>
         </div>
     )
 }
